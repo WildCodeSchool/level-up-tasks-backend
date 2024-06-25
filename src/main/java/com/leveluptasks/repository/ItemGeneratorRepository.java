@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+package com.leveluptasks.repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.entity.Item;
+import com.leveluptasks.entity.Item;
 
 @Component
 public class ItemGeneratorRepository implements CommandLineRunner {
