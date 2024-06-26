@@ -25,18 +25,22 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
     private Date deadline;
+    @Column(nullable = false)
     private Boolean completed;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Priority priority;
     private Date completedAt;
-    @Column(updatable = false)
+    @Column(updatable = false, nullable = false)
     @CreationTimestamp
     private Date createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "expedition_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @JoinColumn(name = "expedition_id", nullable = false)
     @JsonIgnore
     private Expedition expedition;
 

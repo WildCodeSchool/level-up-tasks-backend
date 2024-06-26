@@ -3,6 +3,7 @@ package com.leveluptasks.entity;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Expedition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "expedition", cascade = CascadeType.ALL)
@@ -46,5 +48,18 @@ public class Expedition {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+
+        for(Task task : tasks) {
+            task.setExpedition(this);
+        }
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+        task.setExpedition(this);
+    }
+
+    public void removeTask(Task task) {
+        tasks.remove(task);
     }
 }

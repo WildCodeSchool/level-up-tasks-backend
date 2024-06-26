@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.leveluptasks.entity.Expedition;
+import com.leveluptasks.entity.Task;
 import com.leveluptasks.repository.ExpeditionRepository;
 
 @Service
@@ -39,4 +40,23 @@ public class ExpeditionService {
         this.expeditionRepository.deleteById(id);
     }
 
+    public Expedition addTask(Long expeditionId, Task task) {
+        Expedition expedition = getById(expeditionId);
+        if(expedition != null) {
+            expedition.addTask(task);
+            return create(expedition);
+        }
+        return null;
+    }
+
+    public Expedition removeTask(Long expeditionId, Task task) {
+        Expedition expedition = getById(expeditionId);
+        if(expedition != null) {
+            if (expedition.getTasks().contains(task)) {
+                expedition.removeTask(task);
+                return create(expedition);
+            }
+        }
+        return null;
+    }
 }
