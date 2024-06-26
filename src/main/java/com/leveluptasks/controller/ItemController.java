@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.leveluptasks.controller;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.entity.Item;
-import com.example.demo.service.ItemService;
+import com.leveluptasks.entity.Item;
+import com.leveluptasks.service.ItemService;
 
 import io.swagger.v3.oas.annotations.Operation;
 

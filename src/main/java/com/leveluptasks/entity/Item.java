@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.leveluptasks.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
