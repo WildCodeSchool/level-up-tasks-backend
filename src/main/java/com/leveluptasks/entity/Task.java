@@ -4,10 +4,14 @@ import java.sql.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,8 +35,9 @@ public class Task {
     @CreationTimestamp
     private Date createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "expedition_id", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "expedition_id")
+    @JsonIgnore
     private Expedition expedition;
 
     public enum Priority {

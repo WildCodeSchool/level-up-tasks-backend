@@ -27,18 +27,19 @@ public class TaskGeneratorRepository implements CommandLineRunner {
         List<Expedition> expeditions = new ArrayList<>();
         List<Task> tasks = new ArrayList<>();
 
-        if(this.expeditionRepository.count() == 0) {
+        if(this.expeditionRepository.count() == 0 && this.taskRepository.count() == 0) {
             expeditions.add(new Expedition("Liste des tâches"));
             expeditions.add(new Expedition("Travail"));
 
-            this.expeditionRepository.saveAll(expeditions);
-        }
-
-        if(this.taskRepository.count() == 0) {
             tasks.add(new Task("Réunion", Date.valueOf(LocalDate.now()), Priority.HIGH, Date.valueOf(LocalDate.now())));
             tasks.add(new Task("Yoga pendant 30min", Date.valueOf(LocalDate.now()), Priority.LOW, Date.valueOf(LocalDate.now())));
             tasks.add(new Task("Réviser", Date.valueOf(LocalDate.now()), Priority.MEDIUM, Date.valueOf(LocalDate.now())));
+            
+            tasks.get(0).setExpedition(expeditions.get(1));
+            tasks.get(1).setExpedition(expeditions.get(0));
+            tasks.get(2).setExpedition(expeditions.get(0));
 
+            this.expeditionRepository.saveAll(expeditions);
             this.taskRepository.saveAll(tasks);
         }
     }
