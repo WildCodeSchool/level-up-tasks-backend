@@ -1,5 +1,6 @@
 package com.leveluptasks.service;
 
+import com.leveluptasks.entity.Item;
 import com.leveluptasks.entity.User;
 import com.leveluptasks.repository.UserRepository;
 import com.leveluptasks.tools.HashPassword;
@@ -34,8 +35,7 @@ public class UserService {
     }
 
     public List<User> findAll() {
-        List<User> users = new ArrayList<>();
-        userRepository.findAll().forEach(users::add);
+        List<User> users =  userRepository.findAll();
         return users;
     }
 
