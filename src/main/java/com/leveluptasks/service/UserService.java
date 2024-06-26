@@ -1,6 +1,5 @@
 package com.leveluptasks.service;
 
-import com.leveluptasks.entity.Item;
 import com.leveluptasks.entity.User;
 import com.leveluptasks.repository.UserRepository;
 import com.leveluptasks.tools.HashPassword;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
