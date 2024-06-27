@@ -45,7 +45,7 @@ public class Task {
     private Expedition expedition;
 
     public enum Priority {
-        LOW, MEDIUM, HIGH
+        Bas, Moyenne, Haute
     }
 
     public Task() {

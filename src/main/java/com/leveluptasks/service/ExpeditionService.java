@@ -32,7 +32,7 @@ public class ExpeditionService {
     public Expedition update(Long id, Expedition expedition) {
         Expedition retrievedExpedition = this.expeditionRepository.findById(id).get();
         retrievedExpedition.setName(expedition.getName());
-        Expedition updatedExpedition = this.expeditionRepository.save(expedition);
+        Expedition updatedExpedition = this.expeditionRepository.save(retrievedExpedition);
         return updatedExpedition;
     }
 
