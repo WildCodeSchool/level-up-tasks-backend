@@ -35,8 +35,7 @@ public class TaskService {
         retrievedTask.setPriority(task.getPriority());
         retrievedTask.setCompleted(task.isCompleted());
         retrievedTask.setCompletedAt(task.getCompletedAt());
-        retrievedTask.setExpedition(task.getExpedition());
-        Task updatedTask = this.taskRepository.save(task);
+        Task updatedTask = this.taskRepository.save(retrievedTask);
         return updatedTask;
     }
 

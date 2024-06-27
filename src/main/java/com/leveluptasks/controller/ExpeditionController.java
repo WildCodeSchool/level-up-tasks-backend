@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.javafaker.Book;
 import com.leveluptasks.entity.Expedition;
 import com.leveluptasks.entity.Task;
 import com.leveluptasks.service.ExpeditionService;
@@ -25,6 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 public class ExpeditionController {
     @Autowired
     private ExpeditionService expeditionService;
+    @Autowired
     private TaskService taskService;
 
     @Operation(summary = "Get all expeditions", description = "Get all expeditions")
@@ -65,7 +65,7 @@ public class ExpeditionController {
 
     @Operation(summary = "Delete Task from expedition", description = "Delete Task from expedition")
     @DeleteMapping("/{expeditionId}/tasks/{taskId}")
-    public Expedition removeTask(@PathVariable Long expeditionId, @PathVariable Long taskId) {
-        return expeditionService.removeTask(expeditionId, taskService.getById(taskId));
+    public void removeTask(@PathVariable Long expeditionId, @PathVariable Long taskId) {
+        taskService.delete(taskId);
     }
 }
