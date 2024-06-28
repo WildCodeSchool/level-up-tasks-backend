@@ -25,11 +25,11 @@ public class UserController {
 
     @PostMapping("")
     public User save(@RequestBody User user) throws NoSuchAlgorithmException {
-        return userService.saveOrUpdate(user);
+        return userService.save(user);
     }
     @PutMapping("/{id}")
     public User update(@RequestBody User user , @PathVariable Long id) throws NoSuchAlgorithmException {
-        return userService.saveOrUpdate(user);
+        return userService.update(user);
     }
 
     @GetMapping(value="/{id}")
