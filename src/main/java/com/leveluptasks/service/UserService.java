@@ -26,13 +26,13 @@ public class UserService {
             return null;
         }
     }
-    public User save(User user) throws NoSuchAlgorithmException {
+    public User saveUser(User user) throws NoSuchAlgorithmException {
         String hashedPassword = HashPassword.hashSHA512(user.getPassword());
         user.setPassword(hashedPassword);
         return userRepository.save(user);
     }
 
-    public User update(User user) throws NoSuchAlgorithmException {
+    public User updateUser(User user) throws NoSuchAlgorithmException {
         return userRepository.save(user);
     }
 
