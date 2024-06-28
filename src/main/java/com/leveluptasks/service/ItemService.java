@@ -1,19 +1,19 @@
-package com.example.demo.service;
+package com.leveluptasks.service;
 
 import java.util.List;
 
+import com.leveluptasks.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.Item;
-import com.example.demo.repository.ItemRepository;
+import com.leveluptasks.entity.Item;
 
 @Service
 public class ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
-    
+
     public List<Item> getAll() {
         List<Item> items = this.itemRepository.findAll();
         return items;
