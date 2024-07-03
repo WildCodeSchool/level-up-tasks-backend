@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @Operation(summary = "Get all user expeditions", description = "Get User expeditions by her id")
-    @GetMapping("/expeditions/{userId}")
+    @GetMapping("/{userId}/expeditions")
     public List<Expedition> getExpeditionsByUserId(@PathVariable Long userId) {
         return userService.getUserExpeditions(userId);
     }
