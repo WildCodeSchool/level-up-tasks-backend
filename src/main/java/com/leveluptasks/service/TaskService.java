@@ -2,6 +2,8 @@ package com.leveluptasks.service;
 
 import java.util.List;
 
+import com.leveluptasks.entity.Expedition;
+import com.leveluptasks.repository.ExpeditionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,8 @@ import com.leveluptasks.repository.TaskRepository;
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
-    
+
+
     public List<Task> getAll() {
         List<Task> tasks = this.taskRepository.findAll();
         return tasks;
@@ -27,6 +30,7 @@ public class TaskService {
         Task createdTask = this.taskRepository.save(task);
         return createdTask;
     }
+
 
     public Task update(Long id, Task task) {
         Task retrievedTask = this.taskRepository.findById(id).get();

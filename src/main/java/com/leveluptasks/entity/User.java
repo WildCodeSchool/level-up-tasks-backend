@@ -1,6 +1,9 @@
 package com.leveluptasks.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -22,6 +25,9 @@ public class User {
     private int rewardPercentage;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Expedition> expeditions;
 
 
     public enum Role {
@@ -92,6 +98,14 @@ public class User {
     }
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<Expedition> getExpeditions() {
+        return expeditions;
+    }
+
+    public void setExpeditions(List<Expedition> expeditions) {
+        this.expeditions = expeditions;
     }
 
     public User() {

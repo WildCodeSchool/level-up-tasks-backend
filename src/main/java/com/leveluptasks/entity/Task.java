@@ -39,7 +39,7 @@ public class Task {
     @CreationTimestamp
     private Date createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "expedition_id", nullable = false)
     @JsonIgnore
     private Expedition expedition;

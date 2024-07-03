@@ -1,8 +1,10 @@
 package com.leveluptasks.service;
 
+import com.leveluptasks.entity.Expedition;
 import com.leveluptasks.entity.User;
 import com.leveluptasks.repository.UserRepository;
 import com.leveluptasks.tools.HashPassword;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,14 +56,26 @@ public class UserService {
         Optional<User> foundedUser = userRepository.findByEmail(email);
         if(foundedUser.isPresent()) {
             user = foundedUser.get();
-            System.out.println(user.getPassword());
-        }
 
-        if (user.getPassword().equals(HashPassword.hashSHA512(password))) {
-            return user;
-        } else {
-            return null;
+            if (user.getPassword() !=null && user.getPassword().equals(HashPassword.hashSHA512(password))) {
+                return user;
+            } else {
+                return null;
+            }
         }
+            return null;
     }
 
+    @Transactional
+    public List<Expedition> getUserExpeditions(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            User foundedUser = user.get();
+            return foundedUser.getExpeditions();
+
+        }else {
+            return null;
+        }
+
+    }
 }
