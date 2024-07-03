@@ -2,6 +2,7 @@ package com.leveluptasks.controller;
 
 
 import com.leveluptasks.dto.UserDto;
+import com.leveluptasks.entity.Expedition;
 import com.leveluptasks.entity.User;
 import com.leveluptasks.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,6 +59,12 @@ public class UserController {
         }else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Operation(summary = "Get all user expeditions", description = "Get User expeditions by her id")
+    @GetMapping("/expeditions/{userId}")
+    public List<Expedition> getExpeditionsByUserId(@PathVariable Long userId) {
+        return userService.getUserExpeditions(userId);
     }
 
 }
