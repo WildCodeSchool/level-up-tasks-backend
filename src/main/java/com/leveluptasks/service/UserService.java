@@ -54,14 +54,14 @@ public class UserService {
         Optional<User> foundedUser = userRepository.findByEmail(email);
         if(foundedUser.isPresent()) {
             user = foundedUser.get();
-            System.out.println(user.getPassword());
-        }
 
-        if (user.getPassword().equals(HashPassword.hashSHA512(password))) {
-            return user;
-        } else {
-            return null;
+            if (user.getPassword() !=null && user.getPassword().equals(HashPassword.hashSHA512(password))) {
+                return user;
+            } else {
+                return null;
+            }
         }
+            return null;
     }
 
 }
