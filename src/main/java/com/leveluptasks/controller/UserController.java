@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @Operation(summary = "Find user with email", description = "Find user with email")
-    @PostMapping("/email/{email}")
+    @GetMapping("/email/{email}")
     public User findUserByEmail(@PathVariable String email) throws NoSuchAlgorithmException {
         return userService.getByEmail(email);
     }
