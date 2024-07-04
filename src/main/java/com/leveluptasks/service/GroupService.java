@@ -26,8 +26,6 @@ public class GroupService {
      @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserHasGroupRepository userHasGroupRepository;
 
     
 
