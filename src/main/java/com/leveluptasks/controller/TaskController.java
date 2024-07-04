@@ -2,6 +2,7 @@ package com.leveluptasks.controller;
 
 import java.util.List;
 
+import com.leveluptasks.entity.Expedition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,5 +54,9 @@ public class TaskController {
     public void delete(@PathVariable Long id) {
         this.taskService.delete(id);
     }
-        
+
+    @PostMapping("/{taskId}/expedition")
+    public Expedition getExpByTask(@PathVariable Long taskId) {
+        return taskService.getExpByTask(taskId);
+    }
 }
