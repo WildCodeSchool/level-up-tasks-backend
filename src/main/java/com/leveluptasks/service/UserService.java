@@ -51,6 +51,15 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public User getByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+            return user.get();
+        }else{
+            return null;
+        }   
+    }
+
     public User login(String email, String password) throws NoSuchAlgorithmException {
         User user = new User();
         Optional<User> foundedUser = userRepository.findByEmail(email);

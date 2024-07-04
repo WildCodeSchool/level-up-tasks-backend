@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -59,6 +60,12 @@ public class UserController {
         }else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Operation(summary = "Find user with email", description = "Find user with email")
+    @GetMapping("/email/{email}")
+    public User findUserByEmail(@PathVariable String email) throws NoSuchAlgorithmException {
+        return userService.getByEmail(email);
     }
 
     @Operation(summary = "Get all user expeditions", description = "Get User expeditions by her id")
