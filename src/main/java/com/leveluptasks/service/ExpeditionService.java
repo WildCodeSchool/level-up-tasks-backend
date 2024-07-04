@@ -1,5 +1,6 @@
 package com.leveluptasks.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,5 +89,41 @@ public class ExpeditionService {
                 }
             }else
                 throw new RuntimeException("Task not found");
+    }
+
+    public void completeTask(Long taskId, Long expeId) {
+        Optional<Expedition> optionalExpeditionexpedition = expeditionRepository.findById(expeId);
+        if (!optionalExpeditionexpedition.isPresent()) {
+            throw new RuntimeException("Expedition not found");
+        }
+
+        Expedition expedition = optionalExpeditionexpedition.get();
+        User user = expedition.getUser();
+        Task task = taskRepository.findById(taskId).get();
+        if (!task.isCompleted()) {
+            task.setCompleted(true);
+
+            switch (task.getPriority()) {
+                case Haute:
+                    user.setRewardPercentage(user.getRewardPercentage() + 15);
+                    break;
+                case Moyenne:
+                    user.setRewardPercentage(user.getRewardPercentage() + 10);
+                    break;
+                case Bas:
+                    user.setRewardPercentage(user.getRewardPercentage() + 5);
+                    break;
+            }
+
+            taskRepository.save(task);
+        }
+        boolean allTasksCompleted = expedition.getTasks().stream().allMatch(Task::isCompleted);
+
+        if (allTasksCompleted) {
+            user.setLevel(user.getLevel() + 1);
+        }
+
+        userRepository.save(user);
+
     }
 }
