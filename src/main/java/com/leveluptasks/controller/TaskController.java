@@ -55,7 +55,9 @@ public class TaskController {
         this.taskService.delete(id);
     }
 
-    @PostMapping("/{taskId}/expedition")
+
+    @Operation(summary = "Get task expedition",description = "Get task expedition")
+    @GetMapping("/{taskId}/expedition")
     public Expedition getExpByTask(@PathVariable Long taskId) {
         return taskService.getExpByTask(taskId);
     }

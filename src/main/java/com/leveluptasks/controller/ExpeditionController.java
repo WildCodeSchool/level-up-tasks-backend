@@ -72,12 +72,10 @@ public class ExpeditionController {
     }
 
 
-
-
     @Operation(summary = "Increment user reward and level ", description = "Increment user reward and level when task is completed")
     @PostMapping("/complete/{expeId}/{taskId}")
-    public void completeTask(@PathVariable Long taskId, @PathVariable Long expeId) {
-        expeditionService.completeTask(taskId,expeId);
+    public void completeTask( @PathVariable Long expeId,@PathVariable Long taskId) {
+        expeditionService.completeTask(expeId,taskId);
 
     }
 }
