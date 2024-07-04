@@ -1,5 +1,7 @@
 package com.leveluptasks.entity;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -22,6 +24,10 @@ public class User {
     private int rewardPercentage;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    
+    @OneToMany(mappedBy = "user")
+    private Set<UserHasGroup> userHasGroups;
 
 
     public enum Role {
@@ -110,5 +116,6 @@ public class User {
         this.level = level;
         this.rewardPercentage = rewardPercentage;
     }
+    
 
 }

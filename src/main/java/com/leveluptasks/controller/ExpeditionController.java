@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.javafaker.Book;
 import com.leveluptasks.entity.Expedition;
 import com.leveluptasks.entity.Task;
 import com.leveluptasks.service.ExpeditionService;
