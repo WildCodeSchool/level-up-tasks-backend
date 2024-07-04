@@ -3,14 +3,8 @@ package com.leveluptasks.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.leveluptasks.entity.Expedition;
 import com.leveluptasks.entity.Task;
@@ -24,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 public class ExpeditionController {
     @Autowired
     private ExpeditionService expeditionService;
+    @Autowired
     private TaskService taskService;
 
     @Operation(summary = "Get all expeditions", description = "Get all expeditions")
@@ -32,6 +27,13 @@ public class ExpeditionController {
         return this.expeditionService.getAll();
     }
 
+
+
+    @GetMapping("/{expeditionId}/tasks")
+    public List<Task> getTasksByExpeditionId(@PathVariable Long expeditionId) {
+        return  expeditionService.getTasks(expeditionId);
+
+    }
     @Operation(summary = "Get expedition by id", description = "Get expedition by id")
     @GetMapping("/{id}")
     public Expedition getById(@PathVariable Long id) {
@@ -39,9 +41,9 @@ public class ExpeditionController {
     }
 
     @Operation(summary = "Create expedition", description = "Create expedition")
-    @PostMapping("")
-    public Expedition create(@RequestBody Expedition expedition) {
-        return this.expeditionService.create(expedition);
+    @PostMapping("/{userId}")
+    public Expedition create(@RequestBody Expedition expedition, @PathVariable Long userId) {
+        return this.expeditionService.create(expedition,userId);
     }
 
     @Operation(summary = "Update expedition", description = "Update expedition")
@@ -58,13 +60,14 @@ public class ExpeditionController {
 
     @Operation(summary = "Add Task to expedition", description = "Add Task to expedition")
     @PostMapping("/{expeditionId}/tasks")
-    public Expedition addTask(@PathVariable Long expeditionId, @RequestBody Task task) {
-        return expeditionService.addTask(expeditionId, task);
+    public ResponseEntity<Task> addTask(@PathVariable Long expeditionId, @RequestBody Task task) {
+        Task createdTask = expeditionService.addTask(expeditionId, task);
+        return ResponseEntity.ok(createdTask);
     }
 
     @Operation(summary = "Delete Task from expedition", description = "Delete Task from expedition")
     @DeleteMapping("/{expeditionId}/tasks/{taskId}")
-    public Expedition removeTask(@PathVariable Long expeditionId, @PathVariable Long taskId) {
-        return expeditionService.removeTask(expeditionId, taskService.getById(taskId));
+    public void removeTask(@PathVariable Long expeditionId, @PathVariable Long taskId) {
+        expeditionService.removeTask(taskId,expeditionId);
     }
 }
