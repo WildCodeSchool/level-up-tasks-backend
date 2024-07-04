@@ -68,6 +68,6 @@ public class ExpeditionController {
     @Operation(summary = "Delete Task from expedition", description = "Delete Task from expedition")
     @DeleteMapping("/{expeditionId}/tasks/{taskId}")
     public void removeTask(@PathVariable Long expeditionId, @PathVariable Long taskId) {
-        expeditionService.removeTask(taskId,expeditionId);
+        expeditionService.removeTask(expeditionId,taskId);
     }
 }
