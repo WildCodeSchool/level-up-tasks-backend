@@ -1,8 +1,6 @@
 package com.leveluptasks.entity;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
-
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,7 +33,7 @@ public class Task {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Priority priority;
-    private LocalDateTime completedAt;
+    private Date completedAt;
     @Column(updatable = false, nullable = false)
     @CreationTimestamp
     private Date createdAt;
@@ -60,7 +58,7 @@ public class Task {
         this.completed = false;
     }
 
-    public Task(String description, Date deadline, Boolean completed, Priority priority, LocalDateTime completedAt, Date createdAt) {
+    public Task(String description, Date deadline, Boolean completed, Priority priority, Date completedAt, Date createdAt) {
         this.description = description;
         this.deadline = deadline;
         this.completed = completed;
@@ -105,11 +103,11 @@ public class Task {
         this.priority = priority;
     }
 
-    public LocalDateTime getCompletedAt() {
+    public Date getCompletedAt() {
         return this.completedAt;
     }
 
-    public void setCompletedAt(LocalDateTime completedAt) {
+    public void setCompletedAt(Date completedAt) {
         this.completedAt = completedAt;
     }
     

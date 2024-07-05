@@ -1,7 +1,7 @@
 package com.leveluptasks.service;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,7 +106,7 @@ public class ExpeditionService {
         Task task = taskRepository.findById(taskId).get();
         if (!task.isCompleted()) {
             task.setCompleted(true);
-            task.setCompletedAt(LocalDateTime.now());
+            task.setCompletedAt(Date.valueOf(LocalDate.now()));
             switch (task.getPriority()) {
                 case Haute:
                     user.setRewardPercentage(user.getRewardPercentage() + 15);
