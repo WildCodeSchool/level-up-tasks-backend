@@ -46,4 +46,10 @@ public class TaskService {
     public void delete(Long id) {
         this.taskRepository.deleteById(id);
     }
+
+    public Expedition getExpByTask(Long taskId) {
+        Task task = taskRepository.findById(taskId).get();
+        Expedition expedition = task.getExpedition();
+        return expedition;
+    }
 }
