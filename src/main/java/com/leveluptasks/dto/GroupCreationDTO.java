@@ -1,19 +1,20 @@
 package com.leveluptasks.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import jakarta.validation.constraints.NotNull;
 
 public class GroupCreationDTO {
-   
+    @NotNull(message = "Group name cannot be null")
     private String groupName;
-    private List<String> userNames = new ArrayList<>();
+   
+    private String userEmail;
     
     public GroupCreationDTO() {
     }
 
-    public GroupCreationDTO(String groupName, List<String> userNames) {
+    public GroupCreationDTO(String groupName, String userEmail) {
         this.groupName = groupName;
-        this.userNames = userNames;
+        this.userEmail = userEmail;
     }
     
 
@@ -26,12 +27,12 @@ public class GroupCreationDTO {
         this.groupName = groupName;
     }
 
-    public List<String> getUserNames() {
-        return this.userNames;
+    public String getUserEmail() {
+        return this.userEmail;
     }
 
-    public void setUserNames(List<String> userNames) {
-        this.userNames = userNames;
+    public void setUserEmail( String userEmail) {
+        this.userEmail = userEmail;
     }
  
 

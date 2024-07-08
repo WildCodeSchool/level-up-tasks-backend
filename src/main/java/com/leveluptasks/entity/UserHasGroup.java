@@ -1,6 +1,8 @@
 
 package com.leveluptasks.entity;
 
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -69,6 +71,8 @@ public class UserHasGroup {
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
+
+ 
 
     
 }

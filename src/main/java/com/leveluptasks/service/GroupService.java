@@ -3,6 +3,7 @@ package com.leveluptasks.service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class GroupService {
      @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserHasGroupRepository userHasGroupRepository;
 
     
 
@@ -37,40 +40,34 @@ public class GroupService {
         return groupRepository.findById(id).orElse(null);
     }
     
-      
-    public String saveGroup( GroupCreationDTO groupCreationDTO) {
+    public String saveGroup(GroupCreationDTO groupCreationDTO) {
         Groupe groupe = new Groupe();
         groupe.setName(groupCreationDTO.getGroupName());
-        Set<UserHasGroup> userHasGroups = new HashSet<>();
-        List<String> userNames = groupCreationDTO.getUserNames();
-        String result = "KO";
-        if (userNames != null) {
-            for (String userName : userNames) {
-                User user = userRepository.findByFirstname(userName);
-                if (user != null) {
-                    UserHasGroup userHasGroup = new UserHasGroup();
-                    userHasGroup.setUser(user);
-                    userHasGroup.setGroupe(groupe);
-                    userHasGroups.add(userHasGroup);
-                    groupe.setUserHasGroups(userHasGroups);
-                    result = "OK";
-                }else {
-                    result = "KO";
-                    throw new IllegalArgumentException("Utilisateur avec le prénom '" + userName + "' non trouvé.");
-                }
+
+        String userEmail = groupCreationDTO.getUserEmail();
+        if (userEmail != null && !userEmail.isEmpty()) {
+            Optional<User> userOptional = userRepository.findByEmail(userEmail);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                UserHasGroup userHasGroup = new UserHasGroup();
+                userHasGroup.setUser(user);
+                userHasGroup.setGroupe(groupe);
+
+                Set<UserHasGroup> userHasGroups = new HashSet<>();
+                userHasGroups.add(userHasGroup);
+
+                groupe.setUserHasGroups(userHasGroups);
+            } else {
+                throw new IllegalArgumentException("User not found with email: " + userEmail);
             }
         }
+
         groupRepository.save(groupe);
-        return result;
-
-      
+        return "OK";
     }
 
 
-    public Groupe saveGroup(Groupe groupe) {
-        return groupRepository.save(groupe);
-        
-    }
+
 
     public void deleteGroup(Long id) {
         groupRepository.deleteById(id);
