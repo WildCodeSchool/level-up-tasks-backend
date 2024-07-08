@@ -1,5 +1,6 @@
 package com.leveluptasks.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,12 @@ public class GroupController {
     }
 
     @PostMapping
-    public String createGroupWithUser(@RequestBody GroupCreationDTO groupCreationDTO) {
+    public String createGroupWithUser(@RequestBody GroupCreationDTO groupCreationDTO)throws NoSuchAlgorithmException {
         return groupService.saveGroup(groupCreationDTO);
     }  
     @PutMapping("/{id}")
-    public String updateGroup(@PathVariable Long id, @RequestBody GroupCreationDTO groupCreationDTO) {
-        return groupService.updateGroup(id, groupCreationDTO);
+    public Groupe updateGroup( @RequestBody GroupCreationDTO groupCreationDTO, @PathVariable Long id) throws NoSuchAlgorithmException {
+        return groupService.updateGroup( groupCreationDTO);
     }
 
    

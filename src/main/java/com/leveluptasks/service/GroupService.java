@@ -29,6 +29,7 @@ public class GroupService {
 
     @Autowired
     private UserHasGroupRepository userHasGroupRepository;
+    
 
     
 
@@ -73,11 +74,7 @@ public class GroupService {
         groupRepository.deleteById(id);
     }
 
-    public String updateGroup(Long id, GroupCreationDTO groupCreationDTO) {
-        Groupe existingGroup = groupRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Groupe avec l'ID '" + id + "' non trouvé")); 
-        existingGroup.setName(groupCreationDTO.getGroupName());
-        groupRepository.save(existingGroup);
-        return "OK";
+    public Groupe  updateGroup( GroupCreationDTO groupCreationDTO) {
+        return groupRepository.save(new Groupe(groupCreationDTO.getGroupName()));
     }
-    
 }
