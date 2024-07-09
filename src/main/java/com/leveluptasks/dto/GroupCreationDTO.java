@@ -9,14 +9,14 @@ public class GroupCreationDTO {
     @NotNull(message = "Group name cannot be null")
     private String groupName;
    
-    private List<String> userEmail;
+    private List<String> userEmails;
     
     public GroupCreationDTO() {
     }
 
     public GroupCreationDTO(String groupName, List<String> userEmail) {
         this.groupName = groupName;
-        this.userEmail = userEmail;
+        this.userEmails = userEmail;
     }
     
     public String getGroupName() {
@@ -28,11 +28,11 @@ public class GroupCreationDTO {
     }
 
     public List<String> getUserEmail() {
-        return this.userEmail;
+        return this.userEmails;
     }
 
     public void setUserEmail(List<String> userEmail) {
-        this.userEmail = userEmail;
+        this.userEmails = userEmail;
     }
  
 

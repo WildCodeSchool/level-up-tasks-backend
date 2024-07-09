@@ -45,8 +45,11 @@ public class GroupService {
         return groupRepository.save(groupe);
     }
 
-    public Groupe addUserGroupe (Long id , List<String> UserEmail) {
+    public Groupe addUserToGroupe (Long id , List<String> UserEmail) {
+        System.out.println( id);
+        System.out.println( UserEmail);
         Groupe groupe = groupRepository.findById(id).orElse(null);
+        System.out.println( groupe);
         if (groupe != null) {
             for (String email : UserEmail) {
                 Optional<User> userOptional = userRepository.findByEmail(email);
@@ -61,49 +64,39 @@ public class GroupService {
                 }
             }
         }
-      
-        return groupe;
-    }
-
-    
-
-    
-    public Groupe saveGroup(GroupCreationDTO groupCreationDTO) {
-        Groupe groupe = new Groupe();
-        groupe.setName(groupCreationDTO.getGroupName());
-        
-
-        List<String> userEmail = groupCreationDTO.getUserEmail();
-        if (userEmail != null && !userEmail.isEmpty()) {
-            for (String email : userEmail) {
-                Optional<User> userOptional = userRepository.findByEmail(email);
-                if (userOptional.isPresent()) {
-                    User user = userOptional.get();
-                    UserHasGroup userHasGroup = new UserHasGroup();
-                    userHasGroup.setUser(user);
-                    userHasGroup.setGroupe(groupe);
-                    Set<UserHasGroup> userHasGroups = new HashSet<>();
-                    userHasGroups.add(userHasGroup);
-
-                    groupe.setUserHasGroups(userHasGroups);
-                } else {
-                    
-                    throw new IllegalArgumentException("User not found with email: " + email);
-                }
-            }
-            
-        }
-
         groupRepository.save(groupe);
         return groupe;
     }
-
     public void deleteGroup(Long id) {
         groupRepository.deleteById(id);
     }
     public Groupe updateGroupe(Long id,Groupe groupe) {
         return groupRepository.save(groupe);
     }
+
+    public Groupe updateUserToGroupe(Long id , List<String> UserEmail) {
+        System.out.println( id);
+        System.out.println( UserEmail);
+        Groupe groupe = groupRepository.findById(id).orElse(null);
+        System.out.println( groupe);
+        if (groupe != null) {
+            for (String email : UserEmail) {
+                Optional<User> userOptional = userRepository.findByEmail(email);
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
+                    UserHasGroup userHasGroup = new UserHasGroup();
+                    userHasGroup.setUser(user);
+                    userHasGroup.setGroupe(groupe);
+                    userHasGroupRepository.save(userHasGroup);
+                } else {
+                    throw new IllegalArgumentException("User not found with email: " + email);
+                }
+            }
+        }
+        groupRepository.save(groupe);
+        return groupe;
+    }
+
 
     
 }

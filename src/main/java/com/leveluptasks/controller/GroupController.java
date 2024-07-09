@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.leveluptasks.dto.GroupCreationDTO;
 import com.leveluptasks.entity.Groupe;
 import com.leveluptasks.service.GroupService;
 
@@ -45,11 +43,19 @@ public class GroupController {
     public Groupe updateGroupe( @RequestBody Groupe groupe, @PathVariable Long id) throws NoSuchAlgorithmException {
         return groupService.updateGroupe( id, groupe);
     }
+    
 
      @PutMapping("/{id}/addUser")
-    public Groupe addUseGroupe( @RequestBody List<String> UserEmail, @PathVariable Long id) throws NoSuchAlgorithmException {
-        return groupService.addUserGroupe( id,UserEmail);
+    public Groupe updateUserToGroupe( @RequestBody List<String> UserEmail, @PathVariable Long id) throws NoSuchAlgorithmException {
+        return groupService.updateUserToGroupe( id,UserEmail);
     }
+
+    @PostMapping("/{id}/addUser")
+    public Groupe addUserToGroupe( @RequestBody List<String> UserEmail, @PathVariable Long id) throws NoSuchAlgorithmException {
+        return groupService.addUserToGroupe( id,UserEmail);
+    }
+   
+    
 
     
 

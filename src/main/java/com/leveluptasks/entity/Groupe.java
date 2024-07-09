@@ -2,8 +2,6 @@ package com.leveluptasks.entity;
 
 
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import jakarta.persistence.CascadeType;
@@ -27,7 +25,7 @@ public class Groupe {
     private String name;
 
     @OneToMany(mappedBy = "groupe",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIncludeProperties(value = {"id"})
+    @JsonIncludeProperties( {"id", "user"})
     private Set<UserHasGroup> userHasGroups;
 
 
