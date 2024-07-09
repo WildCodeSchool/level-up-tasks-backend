@@ -4,12 +4,15 @@ import com.leveluptasks.entity.Expedition;
 import com.leveluptasks.entity.User;
 import com.leveluptasks.repository.UserRepository;
 import com.leveluptasks.tools.HashPassword;
+import com.leveluptasks.tools.JwtToken;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -19,6 +22,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JwtToken jwtToken;
 
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
@@ -51,18 +56,19 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User login(String email, String password) throws NoSuchAlgorithmException {
-        User user = new User();
-        Optional<User> foundedUser = userRepository.findByEmail(email);
-        if(foundedUser.isPresent()) {
-            user = foundedUser.get();
-
-            if (user.getPassword() !=null && user.getPassword().equals(HashPassword.hashSHA512(password))) {
-                return user;
-            } else {
-                return null;
+    public String login(String  email,String password) throws NoSuchAlgorithmException {
+            Optional<User> foundedUser = userRepository.findByEmail(email);
+            if (foundedUser.isPresent()) {
+                User user = foundedUser.get();
+                if (user.getPassword() != null && user.getPassword().equals(HashPassword.hashSHA512(password))) {
+                    Map<String, Object> claims = new HashMap<String, Object>();
+                    claims.put("user_id", user.getId());
+                    claims.put("user_fullName", user.getFirstname() + " " + user.getLastname());
+                    return jwtToken.doGenerateToken(claims, email);
+                } else {
+                    return null;    
+                }
             }
-        }
             return null;
     }
 

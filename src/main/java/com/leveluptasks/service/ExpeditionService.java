@@ -70,6 +70,7 @@ public class ExpeditionService {
             throw new RuntimeException("Expedition not found");
         }
     }
+
     public List<Task> getTasks(Long expeditionId) {
         Expedition expedition = getById(expeditionId);
         if(expedition != null) {
@@ -77,6 +78,7 @@ public class ExpeditionService {
         }
         return null;
     }
+
 
     @Transactional
     public void removeTask(Long expeditionId, Long taskId) {
@@ -109,13 +111,13 @@ public class ExpeditionService {
             task.setCompletedAt(Date.valueOf(LocalDate.now()));
             switch (task.getPriority()) {
                 case Haute:
-                    user.setRewardPercentage(user.getRewardPercentage() + 15);
+                    user.setRewardPercentage(user.getRewardPercentage() + 5);
                     break;
                 case Moyenne:
-                    user.setRewardPercentage(user.getRewardPercentage() + 10);
+                    user.setRewardPercentage(user.getRewardPercentage() + 3);
                     break;
                 case Bas:
-                    user.setRewardPercentage(user.getRewardPercentage() + 5);
+                    user.setRewardPercentage(user.getRewardPercentage() + 1);
                     break;
             }
 

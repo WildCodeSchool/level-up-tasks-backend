@@ -5,6 +5,7 @@ import com.leveluptasks.dto.UserDto;
 import com.leveluptasks.entity.Expedition;
 import com.leveluptasks.entity.User;
 import com.leveluptasks.service.UserService;
+import com.leveluptasks.tools.JwtToken;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    JwtToken tokenService;
 
     @Operation(summary = "Get all Users", description = "Get all Users")
     @GetMapping("")
@@ -52,13 +56,8 @@ public class UserController {
 
     @Operation(summary = "Log a user with email password", description = "Log a user with email password")
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody UserDto userDto) throws NoSuchAlgorithmException {
-        User user = userService.login(userDto.getEmail(), userDto.getPassword());
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        }else {
-            return ResponseEntity.notFound().build();
-        }
+    public String login(@RequestBody UserDto userDto) throws NoSuchAlgorithmException {
+        return userService.login(userDto.getEmail(), userDto.getPassword());
     }
 
     @Operation(summary = "Get all user expeditions", description = "Get User expeditions by her id")
