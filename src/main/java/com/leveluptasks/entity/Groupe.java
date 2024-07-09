@@ -3,6 +3,9 @@ package com.leveluptasks.entity;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +27,7 @@ public class Groupe {
     private String name;
 
     @OneToMany(mappedBy = "groupe",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIncludeProperties(value = {"id"})
     private Set<UserHasGroup> userHasGroups;
 
 
@@ -32,26 +36,18 @@ public class Groupe {
     public Groupe(String name) {
         this.name = name;
     }
-
-
-
     public long getIdgroup() {
         return this.idgroup;
     }
-
-
     public String getName() {
         return this.name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public Set<UserHasGroup> getUserHasGroups() {
         return this.userHasGroups;
     }
-
     public void setUserHasGroups(Set<UserHasGroup> userHasGroups) {
         this.userHasGroups = userHasGroups;
     }
