@@ -53,13 +53,8 @@ public class UserController {
 
     @Operation(summary = "Log a user with email password", description = "Log a user with email password")
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody UserDto userDto) throws NoSuchAlgorithmException {
-        User user = userService.login(userDto.getEmail(), userDto.getPassword());
-        if (user != null) {
-            return ResponseEntity.ok(user);
-        }else {
-            return ResponseEntity.notFound().build();
-        }
+    public String login(@RequestBody UserDto userDto) throws NoSuchAlgorithmException {
+        return userService.login(userDto.getEmail(), userDto.getPassword());
     }
 
     @Operation(summary = "Find user with email", description = "Find user with email")
