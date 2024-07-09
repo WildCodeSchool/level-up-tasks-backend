@@ -52,8 +52,13 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User getByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if(user.isPresent()){
+            return user.get();
+        }else{
+            return null;
+        }
     }
 
     public String login(String  email,String password) throws NoSuchAlgorithmException {

@@ -60,6 +60,12 @@ public class UserController {
         return userService.login(userDto.getEmail(), userDto.getPassword());
     }
 
+    @Operation(summary = "Find user with email", description = "Find user with email")
+    @GetMapping("/email/{email}")
+    public User findUserByEmail(@PathVariable String email) throws NoSuchAlgorithmException {
+        return userService.getByEmail(email);
+    }
+
     @Operation(summary = "Get all user expeditions", description = "Get User expeditions by her id")
     @GetMapping("/{userId}/expeditions")
     public List<Expedition> getExpeditionsByUserId(@PathVariable Long userId) {
