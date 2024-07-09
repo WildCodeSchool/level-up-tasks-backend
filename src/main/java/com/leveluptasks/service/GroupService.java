@@ -46,8 +46,6 @@ public class GroupService {
     }
 
     public Groupe addUserGroupe (Long id , List<String> UserEmail) {
-        System.out.println("id: "+id);
-        System.out.println("UserEmail: "+UserEmail);
         Groupe groupe = groupRepository.findById(id).orElse(null);
         if (groupe != null) {
             for (String email : UserEmail) {
@@ -63,6 +61,7 @@ public class GroupService {
                 }
             }
         }
+      
         return groupe;
     }
 
@@ -99,14 +98,12 @@ public class GroupService {
         return groupe;
     }
 
-
-
-
     public void deleteGroup(Long id) {
         groupRepository.deleteById(id);
     }
-
-    public Groupe  updateGroup( GroupCreationDTO groupCreationDTO) {
-        return groupRepository.save(new Groupe(groupCreationDTO.getGroupName()));
+    public Groupe updateGroupe(Long id,Groupe groupe) {
+        return groupRepository.save(groupe);
     }
+
+    
 }

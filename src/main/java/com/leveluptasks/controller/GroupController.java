@@ -38,20 +38,12 @@ public class GroupController {
 
     @PostMapping
     public Groupe createGroupWithUser(@RequestBody Groupe groupe )throws NoSuchAlgorithmException {
-        System.out.println("test");
-        System.out.println("groupe: "+groupe.getName());
-
-        System.out.println("groupe: "+groupe);
         return groupService.saveGroup(groupe);
-       
-
-       
-
-        //return groupService.saveGroup(groupCreationDTO);
     }  
+   
     @PutMapping("/{id}")
-    public Groupe updateGroup( @RequestBody GroupCreationDTO groupCreationDTO, @PathVariable Long id) throws NoSuchAlgorithmException {
-        return groupService.updateGroup( groupCreationDTO);
+    public Groupe updateGroupe( @RequestBody Groupe groupe, @PathVariable Long id) throws NoSuchAlgorithmException {
+        return groupService.updateGroupe( id, groupe);
     }
 
      @PutMapping("/{id}/addUser")
