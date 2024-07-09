@@ -55,10 +55,6 @@ public class GroupController {
         return groupService.addUserToGroupe( id,UserEmail);
     }
    
-    
-
-    
-
     @DeleteMapping("/{id}")
     public void deleteGroup(@PathVariable Long id) {
         groupService.deleteGroup(id);

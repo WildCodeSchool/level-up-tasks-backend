@@ -46,10 +46,7 @@ public class GroupService {
     }
 
     public Groupe addUserToGroupe (Long id , List<String> UserEmail) {
-        System.out.println( id);
-        System.out.println( UserEmail);
         Groupe groupe = groupRepository.findById(id).orElse(null);
-        System.out.println( groupe);
         if (groupe != null) {
             for (String email : UserEmail) {
                 Optional<User> userOptional = userRepository.findByEmail(email);
@@ -75,8 +72,6 @@ public class GroupService {
     }
 
     public Groupe updateUserToGroupe(Long id , List<String> UserEmail) {
-        System.out.println( id);
-        System.out.println( UserEmail);
         Groupe groupe = groupRepository.findById(id).orElse(null);
         System.out.println( groupe);
         if (groupe != null) {
