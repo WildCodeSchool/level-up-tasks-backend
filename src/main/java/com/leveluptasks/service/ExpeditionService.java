@@ -53,11 +53,6 @@ public class ExpeditionService {
     }
 
     public void delete(Long id) {
-        Expedition retrievedExpedition = this.expeditionRepository.findById(id).get();
-        List<Task> tasks = retrievedExpedition.getTasks();
-        for (Task task : tasks) {
-            taskRepository.deleteById(task.getId());
-        }
         this.expeditionRepository.deleteById(id);
     }
 
