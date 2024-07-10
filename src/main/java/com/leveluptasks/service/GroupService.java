@@ -1,15 +1,12 @@
 package com.leveluptasks.service;
 
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.leveluptasks.dto.GroupCreationDTO;
 import com.leveluptasks.entity.Groupe;
 import com.leveluptasks.entity.User;
 import com.leveluptasks.entity.UserHasGroup;
@@ -74,19 +71,30 @@ public class GroupService {
     public Groupe updateUserToGroupe(Long id , List<String> UserEmail) {
         Groupe groupe = groupRepository.findById(id).orElse(null);
         if (groupe != null) {
+            //Check the UserEmail to see if this list contains new members
             for (String email : UserEmail) {
                 Optional<User> userOptional = userRepository.findByEmail(email);
                 if (userOptional.isPresent()) {
                     User user = userOptional.get();
-                    UserHasGroup userHasGroup = new UserHasGroup();
-                    userHasGroup.setUser(user);
-                    userHasGroup.setGroupe(groupe);
-                    userHasGroupRepository.save(userHasGroup);
+                    if(!groupe.hasUser(user)){
+                        UserHasGroup userHasGroup = new UserHasGroup();
+                        userHasGroup.setUser(user);
+                        userHasGroup.setGroupe(groupe);
+                        userHasGroupRepository.save(userHasGroup);
+                    }
                 } else {
                     throw new IllegalArgumentException("User not found with email: " + email);
                 }
             }
+            //Check if UserEmail does not contain an user present in groupe
+            for (UserHasGroup userHasGroup : groupe.getUserHasGroups()) {
+                System.out.println(userHasGroup.getUser().getEmail());
+                if(!UserEmail.contains(userHasGroup.getUser().getEmail())){
+                    userHasGroupRepository.delete(userHasGroup);
+                }
+            }
         }
+
         groupRepository.save(groupe);
         return groupe;
     }

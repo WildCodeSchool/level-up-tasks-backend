@@ -72,7 +72,9 @@ public class UserHasGroup {
         this.isAdmin = isAdmin;
     }
 
- 
+    public boolean hasUserInGroup(Long idGroup, Long idUser) {
+        return (idGroup == this.groupe.getIdgroup() && idUser == this.user.getId());
+    }
 
     
 }
