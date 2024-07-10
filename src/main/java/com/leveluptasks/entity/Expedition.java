@@ -2,14 +2,8 @@ package com.leveluptasks.entity;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "expedition")
@@ -22,12 +16,22 @@ public class Expedition {
 
     @OneToMany(mappedBy = "expedition", cascade = CascadeType.ALL)
     private List<Task> tasks;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @JoinColumn(name = "user_id",nullable = false)
+    @JsonIgnore
+    private  User user;
 
     public Expedition() {
     }
 
     public Expedition(String name) {
         this.name = name;
+    }
+
+    public Expedition(String name, List<Task> tasks, User user) {
+        this.name = name;
+        this.tasks = tasks;
+        this.user = user;
     }
 
     public Long getId() {
@@ -57,6 +61,14 @@ public class Expedition {
     public void addTask(Task task) {
         tasks.add(task);
         task.setExpedition(this);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void removeTask(Task task) {

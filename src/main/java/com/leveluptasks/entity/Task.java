@@ -1,7 +1,6 @@
 package com.leveluptasks.entity;
 
 import java.sql.Date;
-
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,7 +38,7 @@ public class Task {
     @CreationTimestamp
     private Date createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
     @JoinColumn(name = "expedition_id", nullable = false)
     @JsonIgnore
     private Expedition expedition;
