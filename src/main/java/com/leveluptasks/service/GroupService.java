@@ -88,7 +88,6 @@ public class GroupService {
             }
             //Check if UserEmail does not contain an user present in groupe
             for (UserHasGroup userHasGroup : groupe.getUserHasGroups()) {
-                System.out.println(userHasGroup.getUser().getEmail());
                 if(!UserEmail.contains(userHasGroup.getUser().getEmail())){
                     userHasGroupRepository.delete(userHasGroup);
                 }
