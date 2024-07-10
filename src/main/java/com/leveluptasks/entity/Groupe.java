@@ -49,7 +49,14 @@ public class Groupe {
     public void setUserHasGroups(Set<UserHasGroup> userHasGroups) {
         this.userHasGroups = userHasGroups;
     }
- 
+    public boolean hasUser(User user) {
+        for (UserHasGroup userHasGroup : userHasGroups) {
+            if(userHasGroup.hasUserInGroup(idgroup, user.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
 
     
 }

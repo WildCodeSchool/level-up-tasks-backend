@@ -3,7 +3,6 @@ package com.leveluptasks.service;
 import java.util.List;
 
 import com.leveluptasks.entity.Expedition;
-import com.leveluptasks.repository.ExpeditionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

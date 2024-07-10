@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import com.leveluptasks.entity.Expedition;
 import com.leveluptasks.entity.Task;
 import com.leveluptasks.service.ExpeditionService;
-import com.leveluptasks.service.TaskService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -18,8 +17,6 @@ import io.swagger.v3.oas.annotations.Operation;
 public class ExpeditionController {
     @Autowired
     private ExpeditionService expeditionService;
-    @Autowired
-    private TaskService taskService;
 
     @Operation(summary = "Get all expeditions", description = "Get all expeditions")
     @GetMapping("")
