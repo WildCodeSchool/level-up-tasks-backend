@@ -1,5 +1,6 @@
 package com.leveluptasks.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.leveluptasks.dto.GroupCreationDTO;
 import com.leveluptasks.entity.Groupe;
 import com.leveluptasks.service.GroupService;
 
@@ -36,16 +35,26 @@ public class GroupController {
     }
 
     @PostMapping
-    public String createGroupWithUser(@RequestBody GroupCreationDTO groupCreationDTO) {
-        return groupService.saveGroup(groupCreationDTO);
+    public Groupe createGroupWithUser(@RequestBody Groupe groupe )throws NoSuchAlgorithmException {
+        return groupService.saveGroup(groupe);
     }  
+   
     @PutMapping("/{id}")
-    public String updateGroup(@PathVariable Long id, @RequestBody GroupCreationDTO groupCreationDTO) {
-        return groupService.updateGroup(id, groupCreationDTO);
+    public Groupe updateGroupe( @RequestBody Groupe groupe, @PathVariable Long id) throws NoSuchAlgorithmException {
+        return groupService.updateGroupe( id, groupe);
+    }
+    
+
+     @PutMapping("/{id}/addUser")
+    public Groupe updateUserToGroupe( @RequestBody List<String> UserEmail, @PathVariable Long id) throws NoSuchAlgorithmException {
+        return groupService.updateUserToGroupe( id,UserEmail);
     }
 
+    @PostMapping("/{id}/addUser")
+    public Groupe addUserToGroupe( @RequestBody List<String> UserEmail, @PathVariable Long id) throws NoSuchAlgorithmException {
+        return groupService.addUserToGroupe( id,UserEmail);
+    }
    
-
     @DeleteMapping("/{id}")
     public void deleteGroup(@PathVariable Long id) {
         groupService.deleteGroup(id);

@@ -3,6 +3,7 @@ package com.leveluptasks.service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class GroupService {
      @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserHasGroupRepository userHasGroupRepository;
+    
 
     
 
@@ -36,51 +40,57 @@ public class GroupService {
     public Groupe getGroupById(Long id) {
         return groupRepository.findById(id).orElse(null);
     }
-    
-      
-    public String saveGroup( GroupCreationDTO groupCreationDTO) {
-        Groupe groupe = new Groupe();
-        groupe.setName(groupCreationDTO.getGroupName());
-        Set<UserHasGroup> userHasGroups = new HashSet<>();
-        List<String> userNames = groupCreationDTO.getUserNames();
-        String result = "KO";
-        if (userNames != null) {
-            for (String userName : userNames) {
-                User user = userRepository.findByFirstname(userName);
-                if (user != null) {
+
+    public Groupe saveGroup(Groupe groupe) {
+        return groupRepository.save(groupe);
+    }
+
+    public Groupe addUserToGroupe (Long id , List<String> UserEmail) {
+        Groupe groupe = groupRepository.findById(id).orElse(null);
+        if (groupe != null) {
+            for (String email : UserEmail) {
+                Optional<User> userOptional = userRepository.findByEmail(email);
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
                     UserHasGroup userHasGroup = new UserHasGroup();
                     userHasGroup.setUser(user);
                     userHasGroup.setGroupe(groupe);
-                    userHasGroups.add(userHasGroup);
-                    groupe.setUserHasGroups(userHasGroups);
-                    result = "OK";
-                }else {
-                    result = "KO";
-                    throw new IllegalArgumentException("Utilisateur avec le prénom '" + userName + "' non trouvé.");
+                    userHasGroupRepository.save(userHasGroup);
+                } else {
+                    throw new IllegalArgumentException("User not found with email: " + email);
                 }
             }
         }
         groupRepository.save(groupe);
-        return result;
-
-      
+        return groupe;
     }
-
-
-    public Groupe saveGroup(Groupe groupe) {
-        return groupRepository.save(groupe);
-        
-    }
-
     public void deleteGroup(Long id) {
         groupRepository.deleteById(id);
     }
-
-    public String updateGroup(Long id, GroupCreationDTO groupCreationDTO) {
-        Groupe existingGroup = groupRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Groupe avec l'ID '" + id + "' non trouvé")); 
-        existingGroup.setName(groupCreationDTO.getGroupName());
-        groupRepository.save(existingGroup);
-        return "OK";
+    public Groupe updateGroupe(Long id,Groupe groupe) {
+        return groupRepository.save(groupe);
     }
+
+    public Groupe updateUserToGroupe(Long id , List<String> UserEmail) {
+        Groupe groupe = groupRepository.findById(id).orElse(null);
+        if (groupe != null) {
+            for (String email : UserEmail) {
+                Optional<User> userOptional = userRepository.findByEmail(email);
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
+                    UserHasGroup userHasGroup = new UserHasGroup();
+                    userHasGroup.setUser(user);
+                    userHasGroup.setGroupe(groupe);
+                    userHasGroupRepository.save(userHasGroup);
+                } else {
+                    throw new IllegalArgumentException("User not found with email: " + email);
+                }
+            }
+        }
+        groupRepository.save(groupe);
+        return groupe;
+    }
+
+
     
 }
